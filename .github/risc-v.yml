@@ -1,0 +1,20 @@
+name: Fedora
+on:
+  create:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checking whether qemu is available 
+        run: qemu-system-riscv64 --version
+      - name: Check our path
+        run: pwd
+      # $GITHUB_WORKSPACE/qemu_github 
+      - name: Installing qemu via apt
+        run: sudo apt install qemu -y
+      - name: Checking whether qemu is available 
+        run: qemu-system-riscv64 --version
