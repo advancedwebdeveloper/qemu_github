@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Checking whether qemu is available 
-        run: qemu-system-riscv64 --version
+        run: which qemu-system-riscv64
       - name: Check our path
         run: pwd
       # $GITHUB_WORKSPACE/qemu_github 
