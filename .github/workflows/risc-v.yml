@@ -16,5 +16,9 @@ jobs:
         run: sudo apt install qemu qemu-system-misc -y
       - name: Checking whether qemu is available 
         run: qemu-system-riscv64 --version
+      - name: Download Fedora "Minimal" vssd image, with extraction followed
+        run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw.xz && unxz $GITHUB_WORKSPACE/qemu_github/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw.xz
+      - name: Download firmware
+        run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf  
       - name: Checking if virtio* flags are supported
-        run:  qemu-system-riscv64 -nographic -machine virt -smp 8 -m 2G -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0  -device virtio-blk-device,drive=hd0 -drive id=hd0,media=d -device virtio-net-device,netdev=usernet  -netdev user,id=usernet,hostfwd=tcp::10000-:22
+        run: qemu-system-riscv64 -nographic -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/qemu_github/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=$GITHUB_WORKSPACE/qemu_github/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22
