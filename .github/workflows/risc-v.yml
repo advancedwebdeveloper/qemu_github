@@ -17,7 +17,7 @@ jobs:
       - name: Checking whether qemu is available 
         run: qemu-system-riscv64 --version
       - name: Download Fedora "Minimal" vssd image, with extraction followed
-        run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw.xz && unxz $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw.xz && ls
+        run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw.xz && unxz $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw.xz && mv Fedora-Minimal-Rawhide-20200108.n.0-sda.raw ./qemu_github/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw
       - name: Download firmware
         run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf  
       - name: Checking if virtio* flags are supported
