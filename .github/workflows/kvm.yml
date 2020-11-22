@@ -13,7 +13,7 @@ jobs:
         run: pwd
       # $GITHUB_WORKSPACE/qemu_github 
       - name: Installing qemu via apt
-        run: sudo apt install qemu qemu-system-misc *kvm* -y
+        run: sudo apt install qemu qemu-system-misc qemu-kvm -y
       - name: Checking whether qemu-kvm is available
         run: qemu-kvm --version
       - name: Investigating which machine types qemu-kvm supports
