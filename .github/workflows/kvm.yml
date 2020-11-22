@@ -15,8 +15,8 @@ jobs:
       - name: Installing qemu via apt
         run: sudo apt-get update -y && sudo apt install qemu qemu-system-misc qemu-kvm -y
       - name: Checking whether qemu-kvm is available
-        run: qemu-kvm --version
+        run: kvm --version
       - name: Investigating which machine types qemu-kvm supports
-        run: qemu-kvm -M help
+        run: kvm -M help
       - name: Investigating which CPU arch. are supported by qemu-kvm
-        run: qemu-kvm -cpu help
+        run: kvm -cpu help
