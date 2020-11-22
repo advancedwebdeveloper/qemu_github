@@ -20,7 +20,5 @@ jobs:
         run: kvm -M help
       - name: Investigating which CPU arch. are supported by qemu-kvm
         run: kvm -cpu help
-      - name: Requesting CPU features
-        run: sudo cat /proc/cpuinfo | grep vmx
       - name: Validating KVM's infrastructure
         run: sudo kvm-ok
