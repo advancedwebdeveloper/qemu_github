@@ -12,6 +12,8 @@ jobs:
       - name: Check our path
         run: pwd
       # $GITHUB_WORKSPACE/qemu_github 
+      - name: List free vRAM and check swap
+        run: free -h && swapon -a
       - name: Installing qemu via apt
         run: sudo apt update -y && sudo apt install qemu qemu-system-misc -y
       - name: Checking whether qemu is available 
