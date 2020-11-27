@@ -25,4 +25,5 @@ jobs:
       - name: Download firmware
         run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf  
       - name: Checking if virtio* flags are supported
+        shell: bash
         run: qemu-system-riscv64 -nographic -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=/tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22 & ( sleep 30m && ssh root@localhost -p 10000 ) 
