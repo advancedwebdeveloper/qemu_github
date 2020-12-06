@@ -21,7 +21,7 @@ jobs:
       - name: Checking whether qemu is available 
         run: qemu-system-riscv64 --version
       - name: Installing virt-customize and friends
-        run: sudo apt-get build-dep libguestfs -y
+        run: sudo apt install libguestfs -y
       - name: Checking for virt-builder
         run: virt-builder --version
       - name: Download Fedora "Minimal" vssd image, with extraction followed
