@@ -42,11 +42,13 @@ jobs:
       - name: Modify the disk image, to alter boot sequence
         run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --firstboot-command 'dnf update -y && dnf upgrade -y'
       # Let's get rid of SSHd service /etc/init/ssh.conf
-      - name: Examining /etc/init/ssh.conf
-        run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/init/ssh.conf
-      - name: Removing /etc/init/ssh.conf and disable all terminals
-        run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/ssh.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty1.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty2.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty3.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty4.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty5.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty6.conf 
+      #- name: Examining /etc/init/ssh.conf
+      #  run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/init/ssh.conf
+      - name: Removing and disable all terminals
+        run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty1.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty2.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty3.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty4.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty5.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/init/tty6.conf 
        # /etc/default/console-setup doesn't exist
+      - name: Let\'s list /etc
+        run: sudo virt-ls -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc
       - name: Firing qemu
         shell: bash
         run: qemu-system-riscv64 -nographic -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=/tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22 & ( sleep 30m && ssh root@localhost -p 10000 ) 
