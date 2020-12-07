@@ -21,7 +21,7 @@ jobs:
       - name: Checking whether qemu is available 
         run: qemu-system-riscv64 --version
       - name: Trying to find libguestfs
-        run: sudo apt-get install apt-file && sudo apt-file update && apt-file find virt-curtomize
+        run: sudo apt-get install apt-file -y && sudo apt-file update  && apt-file find virt-curtomize
       - name: Checking for virt-builder
         run: virt-builder --version
       - name: Download Fedora "Minimal" vssd image, with extraction followed
