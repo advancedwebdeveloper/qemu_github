@@ -33,10 +33,12 @@ jobs:
       - name: Examining pre-defined tty* setup
         # /etc/default/console-setup doesn't exist
         run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/systemd/logind.conf
-      - name: Update some content
-        run: sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/systemd/logind.conf -e 's/#NAutoVTs=6/NAutoVTs=0/' && sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/systemd/logind.conf -e 's/#ReserveVT=6/ReserveVT=0/'
-      - name: Update some content
+      - name: Update /etc/systemd/logind.conf (1)
+        run: sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/systemd/logind.conf -e 's/\#NAutoVTs=6/NAutoVTs=0/' && sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/systemd/logind.conf -e 's/\#ReserveVT=6/ReserveVT=0/'
+      - name: Update /etc/systemd/logind.conf (2)
         run: sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/issue -e 's/Build*/Ping/' && sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/motd -e 's/For updates and latest information read\:/Ping/'
+      - name: Examining modified tty* setup
+        run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/systemd/logind.conf
       - name: Modify the disk image, to alter boot sequence
         run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --firstboot-command 'dnf update -y && dnf upgrade -y'
       - name: Firing qemu
