@@ -31,7 +31,8 @@ jobs:
       - name: Read a file from QEMU's guest VM. Let's check the welcome message
         run: echo '\n/etc/issue contains ' && sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/issue && echo '\n/etc/motd contains ' && sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/motd
       - name: Examining pre-defined tty* setup
-        run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/default/console-setup /etc/systemd/logind.conf
+        # /etc/default/console-setup doesn't exist
+        run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/systemd/logind.conf
       - name: Update some content
         run: sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/issue -e 's/Wed Jan 8 15:13:59 UTC 2020/Ping/' && sudo virt-edit -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/motd -e 's/Wed Jan 8 15:13:59 UTC 2020/Ping/'
       - name: Modify the disk image, to alter boot sequence
