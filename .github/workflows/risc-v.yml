@@ -29,7 +29,7 @@ jobs:
       - name: Download firmware
         run: wget https://dl.fedoraproject.org/pub/alt/risc-v/repo/virt-builder-images/images/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf  
       - name: Read a file from QEMU's guest VM. Let's check the welcome message
-        run: virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/issue /etc/motd
+        run: sudo virt-cat -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw  /etc/issue /etc/motd
       - name: Modify the disk image, to alter boot sequence
         run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --firstboot-command 'dnf update -y && dnf upgrade -y'
       - name: Firing qemu
