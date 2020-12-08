@@ -70,7 +70,7 @@ jobs:
       - name: ... in rc6.d ..
         run: sudo virt-ls -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/rc6.d/
       - name: Remove annoying terminal service and SSH daemon service
-        run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete etc/systemd/system/multi-user.target.wants/sshd.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete etc/systemd/system/getty.target.wants/getty@tty1.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete usr/lib/tmpfiles.d/openssh.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete usr/sbin/sshd
+        run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/systemd/system/multi-user.target.wants/sshd.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /etc/systemd/system/getty.target.wants/getty@tty1.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete /usr/lib/tmpfiles.d/openssh.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete usr/sbin/sshd
           #
           #
           
