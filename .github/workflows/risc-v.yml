@@ -69,6 +69,8 @@ jobs:
         run: sudo virt-ls -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/rc5.d/
       - name: ... in rc6.d ..
         run: sudo virt-ls -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/rc6.d/
+      - name: List everything under /
+        run: sudo virt-ls -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw -R /
           #
           #
           #
