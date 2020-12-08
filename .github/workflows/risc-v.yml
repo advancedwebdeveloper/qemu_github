@@ -78,4 +78,7 @@ jobs:
       - name: Creating a named pipe
         run: mkfifo /tmp/guest.in /tmp/guest.out
       - name: Firing qemu
-        run: qemu-system-riscv64 -nographic -serial pipe:/tmp/guest -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=/tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22 #-append " console=ttyS0 "
+        run: qemu-system-riscv64 -nographic -serial pipe:/tmp/guest -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=/tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22 & #-append " console=ttyS0 "
+      - name: Take a pause for 30 minutes
+        run: sleep 30m && cat /tmp/guest.out && printf "root\n" > /tmp/guest.in && sleep 5s && cat /tmp/guest.out && printf "fedora_rocks!\n" > /tmp/guest.in && sleep 1m && cat /tmp/guest.out 
+
