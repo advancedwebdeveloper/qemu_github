@@ -70,9 +70,9 @@ jobs:
       - name: ... in rc6.d ..
         run: sudo virt-ls -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw /etc/rc6.d/
       - name: Remove annoying terminal service and SSH daemon service
-        run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete etc/systemd/system/multi-user.target.wants/sshd.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete etc/systemd/system/getty.target.wants/getty@tty1.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete usr/lib/tmpfiles.d/openssh.conf
+        run: sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete etc/systemd/system/multi-user.target.wants/sshd.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete etc/systemd/system/getty.target.wants/getty@tty1.service && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete usr/lib/tmpfiles.d/openssh.conf && sudo virt-customize -a /tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw --delete usr/sbin/sshd
           #
           #
           
-    #- name: Firing qemu
-      #run: qemu-system-riscv64 -nographic -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=/tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22 & ( sleep 30m && ssh root@localhost -p 10000 ) 
+      - name: Firing qemu
+        run: qemu-system-riscv64 -nographic -machine virt -smp 4 -m 2G -kernel $GITHUB_WORKSPACE/Fedora-Minimal-Rawhide-20200108.n.0-fw_payload-uboot-qemu-virt-smode.elf -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-device,rng=rng0 -device virtio-blk-device,drive=hd0 -drive file=/tmp/qemu_storage/Fedora-Minimal-Rawhide-20200108.n.0-sda.raw,format=raw,id=hd0 -device virtio-net-device,netdev=usernet -netdev user,id=usernet,hostfwd=tcp::10000-:22 & ( sleep 30m && ssh root@localhost -p 10000 ) 
